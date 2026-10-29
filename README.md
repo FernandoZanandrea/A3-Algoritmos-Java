@@ -1,4 +1,4 @@
-# A3-Algoritmos-Java
+# A3-Algoritmos-Java Grupo 2
 Trabalho A3 de Algoritmos e Programação — Sistema de Contas a Pagar em Java.
 
 ## Integrantes.
