@@ -1,0 +1,30 @@
+package a3teste;
+
+import javax.swing.JOptionPane;
+
+public class CadastroContas {
+
+      static void cadastrarConta(){
+        int opcao = Integer.parseInt(JOptionPane.showInputDialog(null, "Cadastro de Contas\n 1 • Inclusão\n 2 • Alteração\n 3 • Consulta\n 4 • Exclusão\n 0 • Retornar"));
+        
+        switch (opcao) {
+            case 1:
+                JOptionPane.showMessageDialog(null,"Inclusão");
+            break;
+            case 2:
+                JOptionPane.showMessageDialog(null,"Alteração");
+            break;
+            case 3:
+                JOptionPane.showMessageDialog(null,"Consulta");
+            break;
+            case 4:
+                JOptionPane.showMessageDialog(null,"EXclusão");
+            break;
+            case 0:
+                JOptionPane.showMessageDialog(null,"Retornar");
+            break;
+        }
+      
+    }
+    
+}
