@@ -1,30 +1,52 @@
 package a3teste;
 
 import javax.swing.JOptionPane;
+import java.time.LocalDate;
+import java.time.Month;
 
 public class A3TESTE {
 
     public static void main(String[] args) {
         
-    int Relatórios;
-    
+    int Relatorios;
+
+    // Dados fictícios utilizados para testar os relatórios.
+
     int[] documentos = new int[3];
         documentos[0] = 101;
         documentos[1] = 102;    
         documentos[2] = 103;
         
-    String[] descrições = new String[3];
-        descrições[0] = "Energia elétrica"
-        descrições[1] = "Água"
-        descrições[2] = "Internet"
-                
-       
+    String[] descricoes = new String[3];
+        descricoes[0] = "Energia elétrica";
+        descricoes[1] = "Água";
+        descricoes[2] = "Internet";
+        
+     String[] beneficiarios = new String[3];
+        beneficiarios[0] = "Celesc";
+        beneficiarios[1] = "Casan";
+        beneficiarios[2] = "Operadora de internet"; 
+        
+    double[] valores = new double[3]
+        valores[0] = 250.00;
+        valores[1] = 120.50;
+        valores[2] = 99.90;  
+    
+    LocalDate[] vencimentos = new LocalDate[3];
+        vencimentos[0] = LocalDate.of(2026, 11, 15 );
+        vencimentos[1] = LocalDate.of(2026, 11, 20 );       
+        vencimentos[2] = LocalDate.of(2026, 12, 05 );  
+        
+    double[] saldodevedor = new double[3];
+        saldodevedor[0] = 250.00;       
+        saldodevedor[1] = 70.50;       
+        saldodevedor[2] = 0.00;      
                 
      do{
     
-    Relatórios = Integer.parseInt(JOptionPane.showInputDialog(null," Relatórios " + "\n 1 • Contas a pagar" + " \n 2 • Contas atrasadas" + " \n 3 • Balanço de despesas" + " \n 0 • Retornar"));
+    Relatorios = Integer.parseInt(JOptionPane.showInputDialog(null," Relatórios " + "\n 1 • Contas a pagar" + " \n 2 • Contas atrasadas" + " \n 3 • Balanço de despesas" + " \n 0 • Retornar"));
       
-    switch (Relatórios){
+    switch (Relatorios){
     case 1:
         JOptionPane.showMessageDialog(null,"1 • Contas a pagar");
     break;
@@ -46,6 +68,6 @@ public class A3TESTE {
     break;
     }
   
-    } while (Relatórios != 0);
+    } while (Relatorios != 0);
     }
     }
