@@ -2,41 +2,46 @@ package a3teste;
 
 import javax.swing.JOptionPane;
 import java.time.LocalDate;
-import java.time.Month;
+import java.time.format.DateTimeFormatter;
 
 public class A3TESTE {
 
     public static void main(String[] args) {
         
     int Relatorios;
-
     // Dados fictícios utilizados para testar os relatórios.
-
+    
+    // Número de identificação de cada conta
     int[] documentos = new int[3];
         documentos[0] = 101;
         documentos[1] = 102;    
         documentos[2] = 103;
-        
+    
+    // Descrição da despesa    
     String[] descricoes = new String[3];
         descricoes[0] = "Energia elétrica";
         descricoes[1] = "Água";
         descricoes[2] = "Internet";
         
+    // Nome do beneficiário do pagamento    
      String[] beneficiarios = new String[3];
         beneficiarios[0] = "Celesc";
         beneficiarios[1] = "Casan";
         beneficiarios[2] = "Operadora de internet"; 
         
-    double[] valores = new double[3]
+    // Valor original da conta    
+    double[] valores = new double[3];
         valores[0] = 250.00;
         valores[1] = 120.50;
         valores[2] = 99.90;  
     
+    // Data de vencimento    
     LocalDate[] vencimentos = new LocalDate[3];
         vencimentos[0] = LocalDate.of(2026, 11, 15 );
         vencimentos[1] = LocalDate.of(2026, 11, 20 );       
         vencimentos[2] = LocalDate.of(2026, 12, 05 );  
         
+    // Valor que ainda falta pagar    
     double[] saldodevedor = new double[3];
         saldodevedor[0] = 250.00;       
         saldodevedor[1] = 70.50;       
@@ -49,6 +54,18 @@ public class A3TESTE {
     switch (Relatorios){
     case 1:
         JOptionPane.showMessageDialog(null,"1 • Contas a pagar");
+        String datainicial;
+            datainicial = JOptionPane.showInputDialog(null,"Data inicial (dd/MM/aaaa)");
+        String datafinal;
+            datafinal = JOptionPane.showInputDialog(null,"Data final (dd/MM/aaaa)");
+        
+       DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
+       LocalDate inicio;
+            inicio = LocalDate.parse(datainicial, formato);
+       LocalDate fim;
+            fim = LocalDate.parse(datafinal, formato);
+       
     break;
     
     case 2:
