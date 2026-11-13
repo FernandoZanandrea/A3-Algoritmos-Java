@@ -1,0 +1,35 @@
+package a3teste;
+
+import javax.swing.JOptionPane;
+
+public class A3TESTE {
+
+    public static void main(String[] args) {
+        
+    int Relatórios;
+    
+    Relatórios = Integer.parseInt(JOptionPane.showInputDialog(null," Relatórios " + "\n 1 • Contas a pagar" + " \n 2 • Contas atrasadas" + " \n 3 • Balanço de despesas" + " \n 0 • Retornar"));
+
+   switch (Relatórios){
+    case 1:
+        JOptionPane.showMessageDialog(null,"1 • Contas a pagar");
+    break;
+    
+    case 2:
+    JOptionPane.showMessageDialog(null,"2 • Contas atrasadas");
+    break;
+    
+    
+   case 3:
+    JOptionPane.showMessageDialog(null,"3 • Balanço de despesas");
+    break;
+    
+    case 0:
+    JOptionPane.showMessageDialog(null,"0 • Retornar");
+    break;
+   
+    default:
+    JOptionPane.showMessageDialog(null,"Opção inválida! ");
+    break;
+   
+   
