@@ -8,9 +8,11 @@ public class A3TESTE {
         
     int Relatórios;
     
+    do{
+    
     Relatórios = Integer.parseInt(JOptionPane.showInputDialog(null," Relatórios " + "\n 1 • Contas a pagar" + " \n 2 • Contas atrasadas" + " \n 3 • Balanço de despesas" + " \n 0 • Retornar"));
-
-   switch (Relatórios){
+      
+    switch (Relatórios){
     case 1:
         JOptionPane.showMessageDialog(null,"1 • Contas a pagar");
     break;
@@ -18,7 +20,6 @@ public class A3TESTE {
     case 2:
     JOptionPane.showMessageDialog(null,"2 • Contas atrasadas");
     break;
-    
     
    case 3:
     JOptionPane.showMessageDialog(null,"3 • Balanço de despesas");
@@ -31,5 +32,7 @@ public class A3TESTE {
     default:
     JOptionPane.showMessageDialog(null,"Opção inválida! ");
     break;
-   
-   
+    }
+   } while (Relatórios != 0);
+    }
+    }
