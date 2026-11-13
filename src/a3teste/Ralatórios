@@ -8,7 +8,19 @@ public class A3TESTE {
         
     int Relatórios;
     
-    do{
+    int[] documentos = new int[3];
+        documentos[0] = 101;
+        documentos[1] = 102;    
+        documentos[2] = 103;
+        
+    String[] descrições = new String[3];
+        descrições[0] = "Energia elétrica"
+        descrições[1] = "Água"
+        descrições[2] = "Internet"
+                
+       
+                
+     do{
     
     Relatórios = Integer.parseInt(JOptionPane.showInputDialog(null," Relatórios " + "\n 1 • Contas a pagar" + " \n 2 • Contas atrasadas" + " \n 3 • Balanço de despesas" + " \n 0 • Retornar"));
       
@@ -33,6 +45,7 @@ public class A3TESTE {
     JOptionPane.showMessageDialog(null,"Opção inválida! ");
     break;
     }
-   } while (Relatórios != 0);
+  
+    } while (Relatórios != 0);
     }
     }
