@@ -3,6 +3,8 @@ package a3teste;
 import javax.swing.JOptionPane;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class A3TESTE {
 
@@ -63,15 +65,32 @@ public class A3TESTE {
         LocalDate fim;
         inicio = LocalDate.parse(datainicial, formato);
         fim = LocalDate.parse(datafinal, formato);
-        for(int n=0; n<=2; n=n +1){
         
+        for(int n=0; n<=2; n=n +1){
+            
+        if ((vencimentos[n].isAfter(inicio) || vencimentos[n].isEqual(inicio)) && (vencimentos[n].isBefore(fim) || vencimentos[n].isEqual(fim)) && (saldodevedor[n] > 0)){
+            JOptionPane.showMessageDialog(null,"Vencimento: " + vencimentos[n].format(formato) +  
+                                               "\nDocumento: " + documentos[n] + 
+                                               "\nDescrição: " + descricoes[n] + 
+                                               "\nBeneficiário: " + beneficiarios[n] + 
+                                               "\nValor: " + valores[n] + 
+                                               "\nSaldo devedor: " + saldodevedor[n]);
         
         
         
         }
+        }
             
             
-            
+     //isBefore() — verifica se uma data é anterior a outra.
+
+
+
+    //isAfter() — verifica se uma data é posterior a outra.
+
+
+
+    //isEqual() — verifica se as datas são iguais.     
             
             
             
