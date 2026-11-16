@@ -29,7 +29,7 @@ public class a3teste {
     break;
     
     case 2:
-    JOptionPane.showMessageDialog(null,"2 • Baixa de contas");
+        baixa_contas();
     break;
     
     
