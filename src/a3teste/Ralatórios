@@ -65,18 +65,36 @@ public class A3TESTE {
         LocalDate fim;
         inicio = LocalDate.parse(datainicial, formato);
         fim = LocalDate.parse(datafinal, formato);
+        NumberFormat moeda = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
+        
+        String relatorio = "CONTAS A PAGAR\\n\\n";
         
         for(int n=0; n<=2; n=n +1){
             
         if ((vencimentos[n].isAfter(inicio) || vencimentos[n].isEqual(inicio)) && (vencimentos[n].isBefore(fim) || vencimentos[n].isEqual(fim)) && (saldodevedor[n] > 0)){
+              relatorio += "Documento: " + documentos[n] + "\n"; 
+              relatorio += "Vencimento: " + vencimentos[n].format(formato)+ "\n"; 
+              relatorio += "Descrição: " + descricoes[n] + "\\n";
+              relatorio += "Beneficiário: " + beneficiarios[n] + "\\n";
+              relatorio += "Valor: " + moeda.format(valores[n]) + "\n";
+              relatorio += "Saldo devedor: " + moeda.format(saldodevedor[n]) + "\n";
+              relatorio += "\n----------------------------\n\n";        
+            
+            
+            
+            
+            
             JOptionPane.showMessageDialog(null,"Vencimento: " + vencimentos[n].format(formato) +  
                                                "\nDocumento: " + documentos[n] + 
                                                "\nDescrição: " + descricoes[n] + 
                                                "\nBeneficiário: " + beneficiarios[n] + 
-                                               "\nValor: " + valores[n] + 
-                                               "\nSaldo devedor: " + saldodevedor[n]);
+                                               "\nValor: " + moeda.format(valores[n]) + 
+                                               "\nSaldo devedor: " + moeda.format(saldodevedor[n]));
         
         
+            
+            
+            
         
         }
         }
