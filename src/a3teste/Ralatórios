@@ -55,17 +55,28 @@ public class A3TESTE {
     case 1:
         JOptionPane.showMessageDialog(null,"1 • Contas a pagar");
         String datainicial;
-            datainicial = JOptionPane.showInputDialog(null,"Data inicial (dd/MM/aaaa)");
         String datafinal;
-            datafinal = JOptionPane.showInputDialog(null,"Data final (dd/MM/aaaa)");
+        datainicial = JOptionPane.showInputDialog(null,"Data inicial (dd/MM/aaaa)");
+        datafinal = JOptionPane.showInputDialog(null,"Data final (dd/MM/aaaa)");
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate inicio;
+        LocalDate fim;
+        inicio = LocalDate.parse(datainicial, formato);
+        fim = LocalDate.parse(datafinal, formato);
+        for(int n=0; n<=2; n=n +1){
         
-       DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         
-       LocalDate inicio;
-            inicio = LocalDate.parse(datainicial, formato);
-       LocalDate fim;
-            fim = LocalDate.parse(datafinal, formato);
-       
+        
+        
+        }
+            
+            
+            
+            
+            
+            
+            
+        
     break;
     
     case 2:
