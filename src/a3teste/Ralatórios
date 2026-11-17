@@ -67,52 +67,52 @@ public class A3TESTE {
         fim = LocalDate.parse(datafinal, formato);
         NumberFormat moeda = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
         
-        String relatorio = "CONTAS A PAGAR\\n\\n";
+        String relatorio = "CONTAS A PAGAR\n\n";
         
+        int[] ordem = new int[3];
+            ordem[0] = 0;
+            ordem[1] = 1;
+            ordem[2] = 2;
+            
+        
+            
+            
+            
+            
+            
+            
+            if (vencimentos[ordem[1]].isBefore(vencimentos[ordem[0]])){
+         
+            int auxiliar;
+            auxiliar = ordem[0];
+            ordem[0] = ordem[1];
+            ordem[1] = auxiliar;
+            
+} 
+     
         for(int n=0; n<=2; n=n +1){
+
             
         if ((vencimentos[n].isAfter(inicio) || vencimentos[n].isEqual(inicio)) && (vencimentos[n].isBefore(fim) || vencimentos[n].isEqual(fim)) && (saldodevedor[n] > 0)){
               relatorio += "Documento: " + documentos[n] + "\n"; 
               relatorio += "Vencimento: " + vencimentos[n].format(formato)+ "\n"; 
-              relatorio += "Descrição: " + descricoes[n] + "\\n";
-              relatorio += "Beneficiário: " + beneficiarios[n] + "\\n";
+              relatorio += "Descrição: " + descricoes[n] + "\n";
+              relatorio += "Beneficiário: " + beneficiarios[n] + "\n";
               relatorio += "Valor: " + moeda.format(valores[n]) + "\n";
               relatorio += "Saldo devedor: " + moeda.format(saldodevedor[n]) + "\n";
               relatorio += "\n----------------------------\n\n";        
-            
-            
-            
-            
-            
-            JOptionPane.showMessageDialog(null,"Vencimento: " + vencimentos[n].format(formato) +  
-                                               "\nDocumento: " + documentos[n] + 
-                                               "\nDescrição: " + descricoes[n] + 
-                                               "\nBeneficiário: " + beneficiarios[n] + 
-                                               "\nValor: " + moeda.format(valores[n]) + 
-                                               "\nSaldo devedor: " + moeda.format(saldodevedor[n]));
-        
-        
-            
-            
-            
-        
+             
         }
         }
             
-            
-     //isBefore() — verifica se uma data é anterior a outra.
-
-
-
-    //isAfter() — verifica se uma data é posterior a outra.
-
-
-
-    //isEqual() — verifica se as datas são iguais.     
-            
-            
-            
-            
+        
+        if (relatorio.equals("CONTAS A PAGAR\n\n")) {
+            relatorio = "Nenhuma conta a pagar encontrada neste período.";
+}
+        
+       JOptionPane.showMessageDialog(null, relatorio);  
+       
+   
         
     break;
     
