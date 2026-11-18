@@ -3,6 +3,7 @@ package a3teste;
 import javax.swing.JOptionPane;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -10,7 +11,7 @@ public class A3TESTE {
 
     public static void main(String[] args) {
         
-    int Relatorios;
+    int Relatorios = 0;
     // Dados fictícios utilizados para testar os relatórios.
     
     // Número de identificação de cada conta
@@ -39,20 +40,39 @@ public class A3TESTE {
     
     // Data de vencimento    
     LocalDate[] vencimentos = new LocalDate[3];
-        vencimentos[0] = LocalDate.of(2026, 11, 15 );
-        vencimentos[1] = LocalDate.of(2026, 11, 20 );       
-        vencimentos[2] = LocalDate.of(2026, 12, 05 );  
+        vencimentos[0] = LocalDate.of(2026, 12, 05 );
+        vencimentos[1] = LocalDate.of(2026, 11, 10 );       
+        vencimentos[2] = LocalDate.of(2026, 11, 15 );  
         
     // Valor que ainda falta pagar    
     double[] saldodevedor = new double[3];
         saldodevedor[0] = 250.00;       
         saldodevedor[1] = 70.50;       
-        saldodevedor[2] = 0.00;      
+        saldodevedor[2] = 99.90;      
                 
      do{
     
-    Relatorios = Integer.parseInt(JOptionPane.showInputDialog(null," Relatórios " + "\n 1 • Contas a pagar" + " \n 2 • Contas atrasadas" + " \n 3 • Balanço de despesas" + " \n 0 • Retornar"));
+    String entrada;
+    
+    entrada = JOptionPane.showInputDialog(null," Relatórios " + "\n 1 • Contas a pagar" + " \n 2 • Contas atrasadas" + " \n 3 • Balanço de despesas" + " \n 0 • Retornar");
       
+    if(entrada == null ){
+        break;}    
+    
+    try {
+    
+    Relatorios = Integer.parseInt(entrada);
+    
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Opção inválida! Digite um número de 0 a 3.");
+        Relatorios = -1;
+        
+        continue;
+
+}
+    
+  
+    
     switch (Relatorios){
     case 1:
         JOptionPane.showMessageDialog(null,"1 • Contas a pagar");
@@ -60,11 +80,35 @@ public class A3TESTE {
         String datafinal;
         datainicial = JOptionPane.showInputDialog(null,"Data inicial (dd/MM/aaaa)");
         datafinal = JOptionPane.showInputDialog(null,"Data final (dd/MM/aaaa)");
+        
+    if(datainicial == null   ||   datafinal == null ){
+        break;}    
+        
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate inicio;
         LocalDate fim;
+        
+    try {
+        
         inicio = LocalDate.parse(datainicial, formato);
         fim = LocalDate.parse(datafinal, formato);
+        
+        }
+    catch (DateTimeParseException e) {
+        
+        JOptionPane.showMessageDialog(null, "Data inválida! Digite no formato dd/MM/aaaa.");
+            break;
+    } 
+        if (inicio.isAfter(fim)){
+        JOptionPane.showMessageDialog(null, "Período inválido! A data inicial não pode ser posterior à data final.");
+            break;
+    }
+    
+    
+    
+        
+        
+        
         NumberFormat moeda = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
         
         String relatorio = "CONTAS A PAGAR\n\n";
@@ -79,27 +123,32 @@ public class A3TESTE {
             
             
             
-            
-            
-            if (vencimentos[ordem[1]].isBefore(vencimentos[ordem[0]])){
+            for(int i=0; i<=1; i=i +1){
+            for(int n=0; n<=1; n=n +1) {
+
+            if (vencimentos[ordem[n+1]].isBefore(vencimentos[ordem[n]])){
          
             int auxiliar;
-            auxiliar = ordem[0];
-            ordem[0] = ordem[1];
-            ordem[1] = auxiliar;
+            auxiliar = ordem[n];
+            ordem[n] = ordem[n+1];
+            ordem[n+1] = auxiliar;
             
-} 
-     
+            } 
+            }
+            }
+            
+            
+            
         for(int n=0; n<=2; n=n +1){
 
             
-        if ((vencimentos[n].isAfter(inicio) || vencimentos[n].isEqual(inicio)) && (vencimentos[n].isBefore(fim) || vencimentos[n].isEqual(fim)) && (saldodevedor[n] > 0)){
-              relatorio += "Documento: " + documentos[n] + "\n"; 
-              relatorio += "Vencimento: " + vencimentos[n].format(formato)+ "\n"; 
-              relatorio += "Descrição: " + descricoes[n] + "\n";
-              relatorio += "Beneficiário: " + beneficiarios[n] + "\n";
-              relatorio += "Valor: " + moeda.format(valores[n]) + "\n";
-              relatorio += "Saldo devedor: " + moeda.format(saldodevedor[n]) + "\n";
+        if ((vencimentos[ordem[n]].isAfter(inicio) || vencimentos[ordem[n]].isEqual(inicio)) && (vencimentos[ordem[n]].isBefore(fim) || vencimentos[ordem[n]].isEqual(fim)) && (saldodevedor[ordem[n]] > 0)){
+              relatorio += "Documento: " + documentos[ordem[n]] + "\n"; 
+              relatorio += "Vencimento: " + vencimentos[ordem[n]].format(formato)+ "\n"; 
+              relatorio += "Descrição: " + descricoes[ordem[n]] + "\n";
+              relatorio += "Beneficiário: " + beneficiarios[ordem[n]] + "\n";
+              relatorio += "Valor: " + moeda.format(valores[ordem[n]]) + "\n";
+              relatorio += "Saldo devedor: " + moeda.format(saldodevedor[ordem[n]]) + "\n";
               relatorio += "\n----------------------------\n\n";        
              
         }
