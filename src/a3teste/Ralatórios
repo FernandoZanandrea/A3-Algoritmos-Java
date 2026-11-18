@@ -1,187 +1,190 @@
 package a3teste;
 
 import javax.swing.JOptionPane;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.text.NumberFormat;
-import java.util.Locale;
+import java.time.LocalDate;//....................... Armazenamento e comparação de datas
+import java.time.format.DateTimeFormatter;//........ Formatação de datas
+import java.time.format.DateTimeParseException;//... Tratamento de erros nas datas
+import java.text.NumberFormat;//.................... Formatação de valores monetários
+import java.util.Locale;//.......................... Configuração do padrão brasileiro
 
 public class A3TESTE {
 
     public static void main(String[] args) {
-        
-    int Relatorios = 0;
-    // Dados fictícios utilizados para testar os relatórios.
-    
-    // Número de identificação de cada conta
-    int[] documentos = new int[3];
+        // Armazena a opção do menu, iniciando em 0 para evitar erros.
+        int Relatorios = 0;
+        // Dados fictícios utilizados para testar os relatórios.
+
+        // Número de identificação de cada conta
+        int[] documentos = new int[3];
         documentos[0] = 101;
-        documentos[1] = 102;    
+        documentos[1] = 102;
         documentos[2] = 103;
-    
-    // Descrição da despesa    
-    String[] descricoes = new String[3];
+
+        // Descrição da despesa    
+        String[] descricoes = new String[3];
         descricoes[0] = "Energia elétrica";
         descricoes[1] = "Água";
         descricoes[2] = "Internet";
-        
-    // Nome do beneficiário do pagamento    
-     String[] beneficiarios = new String[3];
+
+        // Nome do beneficiário do pagamento    
+        String[] beneficiarios = new String[3];
         beneficiarios[0] = "Celesc";
         beneficiarios[1] = "Casan";
-        beneficiarios[2] = "Operadora de internet"; 
-        
-    // Valor original da conta    
-    double[] valores = new double[3];
+        beneficiarios[2] = "Operadora de internet";
+
+        // Valor original da conta    
+        double[] valores = new double[3];
         valores[0] = 250.00;
         valores[1] = 120.50;
-        valores[2] = 99.90;  
-    
-    // Data de vencimento    
-    LocalDate[] vencimentos = new LocalDate[3];
-        vencimentos[0] = LocalDate.of(2026, 12, 05 );
-        vencimentos[1] = LocalDate.of(2026, 11, 10 );       
-        vencimentos[2] = LocalDate.of(2026, 11, 15 );  
+        valores[2] = 99.90;
+
+        // Data de vencimento    
+        LocalDate[] vencimentos = new LocalDate[3];
+        vencimentos[0] = LocalDate.of(2026, 12, 05);
+        vencimentos[1] = LocalDate.of(2026, 11, 10);
+        vencimentos[2] = LocalDate.of(2026, 11, 15);
+
+        // Valor que ainda falta pagar    
+        double[] saldodevedor = new double[3];
+        saldodevedor[0] = 250.00;
+        saldodevedor[1] = 70.50;
+        saldodevedor[2] = 99.90;
         
-    // Valor que ainda falta pagar    
-    double[] saldodevedor = new double[3];
-        saldodevedor[0] = 250.00;       
-        saldodevedor[1] = 70.50;       
-        saldodevedor[2] = 99.90;      
+        // Fica repetindo o menu enquanto a opção escolhida for diferente de 0.
+        do {
+            // Recebe a opção digitada como texto para permitir validar a entrada.
+            String entrada;
+
+            entrada = JOptionPane.showInputDialog(null, " Relatórios " + "\n 1 • Contas a pagar" + " \n 2 • Contas atrasadas" + " \n 3 • Balanço de despesas" + " \n 0 • Retornar");
+          
+            // Encerra o menu caso o usuário clique em Cancelar ou feche a janela    
+            if (entrada == null) {
+                break;
+            }
+            
+            // Adicionado após identificar um erro ao digitar letras em vez de números no menu.
+            // Converte a opção para número e trata entradas inválidas
+            try {
+
+                Relatorios = Integer.parseInt(entrada);
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Opção inválida! Digite um número de 0 a 3.");
                 
-     do{
-    
-    String entrada;
-    
-    entrada = JOptionPane.showInputDialog(null," Relatórios " + "\n 1 • Contas a pagar" + " \n 2 • Contas atrasadas" + " \n 3 • Balanço de despesas" + " \n 0 • Retornar");
-      
-    if(entrada == null ){
-        break;}    
-    
-    try {
-    
-    Relatorios = Integer.parseInt(entrada);
-    
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Opção inválida! Digite um número de 0 a 3.");
-        Relatorios = -1;
-        
-        continue;
+                // Define -1 para permitir que o menu continue após uma entrada inválida.
+                Relatorios = -1;
 
-}
-    
-  
-    
-    switch (Relatorios){
-    case 1:
-        JOptionPane.showMessageDialog(null,"1 • Contas a pagar");
-        String datainicial;
-        String datafinal;
-        datainicial = JOptionPane.showInputDialog(null,"Data inicial (dd/MM/aaaa)");
-        datafinal = JOptionPane.showInputDialog(null,"Data final (dd/MM/aaaa)");
-        
-    if(datainicial == null   ||   datafinal == null ){
-        break;}    
-        
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate inicio;
-        LocalDate fim;
-        
-    try {
-        
-        inicio = LocalDate.parse(datainicial, formato);
-        fim = LocalDate.parse(datafinal, formato);
-        
-        }
-    catch (DateTimeParseException e) {
-        
-        JOptionPane.showMessageDialog(null, "Data inválida! Digite no formato dd/MM/aaaa.");
-            break;
-    } 
-        if (inicio.isAfter(fim)){
-        JOptionPane.showMessageDialog(null, "Período inválido! A data inicial não pode ser posterior à data final.");
-            break;
-    }
-    
-    
-    
-        
-        
-        
-        NumberFormat moeda = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
-        
-        String relatorio = "CONTAS A PAGAR\n\n";
-        
-        int[] ordem = new int[3];
-            ordem[0] = 0;
-            ordem[1] = 1;
-            ordem[2] = 2;
-            
-        
-            
-            
-            
-            
-            for(int i=0; i<=1; i=i +1){
-            for(int n=0; n<=1; n=n +1) {
+                continue;
 
-            if (vencimentos[ordem[n+1]].isBefore(vencimentos[ordem[n]])){
-         
-            int auxiliar;
-            auxiliar = ordem[n];
-            ordem[n] = ordem[n+1];
-            ordem[n+1] = auxiliar;
-            
-            } 
-            }
             }
             
-            
-            
-        for(int n=0; n<=2; n=n +1){
+            // Direciona o programa para o relatório correspondente à opção escolhida
+            switch (Relatorios) {
+                case 1:
+                    JOptionPane.showMessageDialog(null, "1 • Contas a pagar");
+                    String datainicial;
+                    String datafinal;
+                    datainicial = JOptionPane.showInputDialog(null, "Data inicial (dd/MM/aaaa)");
+                    datafinal = JOptionPane.showInputDialog(null, "Data final (dd/MM/aaaa)");
+                    
+                    // Adicionado após identificar um erro ao cancelar a entrada das datas.
+                    if (datainicial == null || datafinal == null) {
+                        break;
+                    }
+                    
+                    // Define o formato brasileiro para leitura e comparação das datas
+                    DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDate inicio;
+                    LocalDate fim;
+                    
+                    // Adicionado após identificar erros ao informar datas inválidas
+                    try {
 
-            
-        if ((vencimentos[ordem[n]].isAfter(inicio) || vencimentos[ordem[n]].isEqual(inicio)) && (vencimentos[ordem[n]].isBefore(fim) || vencimentos[ordem[n]].isEqual(fim)) && (saldodevedor[ordem[n]] > 0)){
-              relatorio += "Documento: " + documentos[ordem[n]] + "\n"; 
-              relatorio += "Vencimento: " + vencimentos[ordem[n]].format(formato)+ "\n"; 
-              relatorio += "Descrição: " + descricoes[ordem[n]] + "\n";
-              relatorio += "Beneficiário: " + beneficiarios[ordem[n]] + "\n";
-              relatorio += "Valor: " + moeda.format(valores[ordem[n]]) + "\n";
-              relatorio += "Saldo devedor: " + moeda.format(saldodevedor[ordem[n]]) + "\n";
-              relatorio += "\n----------------------------\n\n";        
-             
-        }
-        }
-            
-        
-        if (relatorio.equals("CONTAS A PAGAR\n\n")) {
-            relatorio = "Nenhuma conta a pagar encontrada neste período.";
+                        inicio = LocalDate.parse(datainicial, formato);
+                        fim = LocalDate.parse(datafinal, formato);
+
+                    } catch (DateTimeParseException e) {
+
+                        JOptionPane.showMessageDialog(null, "Data inválida! Digite no formato dd/MM/aaaa.");
+                        break;
+                    }
+                    
+                    // Adicionado  após identificar erros ao informar data inicial posterior à data final
+                    if (inicio.isAfter(fim)) {
+                        JOptionPane.showMessageDialog(null, "Período inválido! A data inicial não pode ser posterior à data final.");
+                        break;
+                    }
+                    
+                    // Formata os valores das contas em reais, seguindo o padrão brasileiro.
+                    NumberFormat moeda = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
+
+                    String relatorio = "CONTAS A PAGAR\n\n";
+                    
+                    // Variável auxiliar para trocar as posições sem perder o valor anterior.
+                    int[] ordem = new int[3];
+                    ordem[0] = 0;
+                    ordem[1] = 1;
+                    ordem[2] = 2;
+                    
+                    // Ordena as contas pela data de vencimento, da mais antiga para a mais recente
+                    for (int i = 0; i <= 1; i = i + 1) {
+                        for (int n = 0; n <= 1; n = n + 1) {
+                            
+                            // Compara os vencimentos e troca as posições quando necessário
+                            if (vencimentos[ordem[n + 1]].isBefore(vencimentos[ordem[n]])) {
+                                
+                                // Variável auxiliar para realizar a troca sem perder a posição original.
+                                int auxiliar;
+                                auxiliar = ordem[n];
+                                ordem[n] = ordem[n + 1];
+                                ordem[n + 1] = auxiliar;
+
+                            }
+                        }
+                    }
+                    
+                    // Percorre as contas ordenadas e seleciona apenas as que estão dentro do período e possuem saldo devedor.
+                    for (int n = 0; n <= 2; n = n + 1) {
+
+                        if ((vencimentos[ordem[n]].isAfter(inicio) || vencimentos[ordem[n]].isEqual(inicio)) && (vencimentos[ordem[n]].isBefore(fim) || vencimentos[ordem[n]].isEqual(fim)) && (saldodevedor[ordem[n]] > 0)) {
+                           
+                            // Acrescenta os dados da conta ao relatório, mantendo a ordem dos vencimentos.
+                            relatorio += "Documento: " + documentos[ordem[n]] + "\n";
+                            relatorio += "Vencimento: " + vencimentos[ordem[n]].format(formato) + "\n";
+                            relatorio += "Descrição: " + descricoes[ordem[n]] + "\n";
+                            relatorio += "Beneficiário: " + beneficiarios[ordem[n]] + "\n";
+                            relatorio += "Valor: " + moeda.format(valores[ordem[n]]) + "\n";
+                            relatorio += "Saldo devedor: " + moeda.format(saldodevedor[ordem[n]]) + "\n";
+                            relatorio += "\n----------------------------\n\n";
+
+                        }
+                    }
+
+                    if (relatorio.equals("CONTAS A PAGAR\n\n")) {
+                        relatorio = "Nenhuma conta a pagar encontrada neste período.";
+                    }
+
+                    JOptionPane.showMessageDialog(null, relatorio);
+
+                    break;
+
+                case 2:
+                    JOptionPane.showMessageDialog(null, "2 • Contas atrasadas");
+                    break;
+
+                case 3:
+                    JOptionPane.showMessageDialog(null, "3 • Balanço de despesas");
+                    break;
+
+                case 0:
+                    JOptionPane.showMessageDialog(null, "0 • Retornar");
+                    break;
+
+                default:
+                    JOptionPane.showMessageDialog(null, "Opção inválida! ");
+                    break;
+            }
+
+        } while (Relatorios != 0);
+    }
 }
-        
-       JOptionPane.showMessageDialog(null, relatorio);  
-       
-   
-        
-    break;
-    
-    case 2:
-    JOptionPane.showMessageDialog(null,"2 • Contas atrasadas");
-    break;
-    
-   case 3:
-    JOptionPane.showMessageDialog(null,"3 • Balanço de despesas");
-    break;
-    
-    case 0:
-    JOptionPane.showMessageDialog(null,"0 • Retornar");
-    break;
-   
-    default:
-    JOptionPane.showMessageDialog(null,"Opção inválida! ");
-    break;
-    }
-  
-    } while (Relatorios != 0);
-    }
-    }
