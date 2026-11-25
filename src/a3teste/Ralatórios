@@ -19,40 +19,46 @@ public class A3TESTE {
         // Dados fictícios utilizados para testar os relatórios.
 
         // Número de identificação de cada conta
-        int[] documentos = new int[3];
+        int[] documentos = new int[4];
         documentos[0] = 101;
         documentos[1] = 102;
         documentos[2] = 103;
+        documentos[3] = 104;
 
         // Descrição da despesa    
-        String[] descricoes = new String[3];
+        String[] descricoes = new String[4];
         descricoes[0] = "Energia elétrica";
         descricoes[1] = "Água";
         descricoes[2] = "Internet";
+        descricoes[3] = "Aluguel";
 
         // Nome do beneficiário do pagamento    
-        String[] beneficiarios = new String[3];
+        String[] beneficiarios = new String[4];
         beneficiarios[0] = "Celesc";
         beneficiarios[1] = "Casan";
         beneficiarios[2] = "Operadora de internet";
+        beneficiarios[3] = "Imobiliária";
 
         // Valor original da conta    
-        double[] valores = new double[3];
+        double[] valores = new double[4];
         valores[0] = 250.00;
         valores[1] = 120.50;
         valores[2] = 99.90;
+        valores[3] = 850.00;
 
         // Data de vencimento    
-        LocalDate[] vencimentos = new LocalDate[3];
+        LocalDate[] vencimentos = new LocalDate[4];
         vencimentos[0] = LocalDate.of(2026, 12, 05);
         vencimentos[1] = LocalDate.of(2026, 11, 10);
         vencimentos[2] = LocalDate.of(2026, 11, 15);
+        vencimentos[3] = LocalDate.of(2026, 11, 20);
 
         // Valor que ainda falta pagar    
-        double[] saldodevedor = new double[3];
+        double[] saldodevedor = new double[4];
         saldodevedor[0] = 250.00;
         saldodevedor[1] = 70.50;
         saldodevedor[2] = 99.90;
+        saldodevedor[3] = 850.00;
 
         // Fica repetindo o menu enquanto a opção escolhida for diferente de 0.
         do {
@@ -157,14 +163,15 @@ public class A3TESTE {
         String relatorio = "CONTAS A PAGAR\n\n";
 
         // Variável auxiliar para trocar as posições sem perder o valor anterior.
-        int[] ordem = new int[3];
-        ordem[0] = 0;
-        ordem[1] = 1;
-        ordem[2] = 2;
+        int[] ordem = new int[vencimentos.length];
+        // Preenche automaticamente o vetor ordem conforme a quantidade de contas cadastradas
+        for (int n = 0; n < ordem.length; n = n + 1) {
+            ordem[n] = n;
+        }
 
         // Ordena as contas pela data de vencimento, da mais antiga para a mais recente
-        for (int i = 0; i <= 1; i = i + 1) {
-            for (int n = 0; n <= 1; n = n + 1) {
+        for (int i = 0; i < ordem.length - 1; i = i + 1) {
+            for (int n = 0; n < ordem.length - 1; n = n + 1) {
 
                 // Compara os vencimentos e troca as posições quando necessário
                 if (vencimentos[ordem[n + 1]].isBefore(vencimentos[ordem[n]])) {
@@ -180,7 +187,7 @@ public class A3TESTE {
         }
 
         // Percorre as contas ordenadas e seleciona apenas as que estão dentro do período e possuem saldo devedor.
-        for (int n = 0; n <= 2; n = n + 1) {
+        for (int n = 0; n < ordem.length; n = n + 1) {
 
             if ((vencimentos[ordem[n]].isAfter(inicio) || vencimentos[ordem[n]].isEqual(inicio)) && (vencimentos[ordem[n]].isBefore(fim) || vencimentos[ordem[n]].isEqual(fim)) && (saldodevedor[ordem[n]] > 0)) {
 
@@ -253,14 +260,15 @@ public class A3TESTE {
         LocalDate hoje = LocalDate.now();
 
         // Variável auxiliar para trocar as posições sem perder o valor anterior.
-        int[] ordem = new int[3];
-        ordem[0] = 0;
-        ordem[1] = 1;
-        ordem[2] = 2;
+        int[] ordem = new int[vencimentos.length];
+        // Preenche automaticamente o vetor ordem conforme a quantidade de contas cadastradas.
+        for (int n = 0; n < ordem.length; n = n + 1) {
+            ordem[n] = n;
+        }
 
         // Ordena as contas pela data de vencimento, da mais antiga para a mais recente
-        for (int i = 0; i <= 1; i = i + 1) {
-            for (int n = 0; n <= 1; n = n + 1) {
+        for (int i = 0; i < ordem.length - 1; i = i + 1) {
+            for (int n = 0; n < ordem.length - 1; n = n + 1) {
 
                 // Compara os vencimentos e troca as posições quando necessário
                 if (vencimentos[ordem[n + 1]].isBefore(vencimentos[ordem[n]])) {
@@ -276,7 +284,7 @@ public class A3TESTE {
         }
 
         // Seleciona as contas dentro do período informado, com saldo devedor e vencimento anterior à data atual.
-        for (int n = 0; n <= 2; n = n + 1) {
+        for (int n = 0; n < ordem.length; n = n + 1) {
 
             if ((vencimentos[ordem[n]].isAfter(inicio) || vencimentos[ordem[n]].isEqual(inicio))
                     && (vencimentos[ordem[n]].isBefore(fim) || vencimentos[ordem[n]].isEqual(fim))
