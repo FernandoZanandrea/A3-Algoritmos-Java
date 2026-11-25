@@ -7,12 +7,11 @@ import java.time.format.DateTimeFormatter;//........ Formatação de datas
 import java.time.format.DateTimeParseException;//... Tratamento de erros nas datas
 import java.text.NumberFormat;//.................... Formatação de valores monetários
 import java.util.Locale;//.......................... Configuração do padrão brasileiro
+import javax.swing.JTextArea;//..................... Exibição dos relatórios com colunas alinhadas
 
 public class A3TESTE {
 
     public static void main(String[] args) {
-
-        FlatLightLaf.setup();
 
         // Armazena a opção do menu, iniciando em 0 para evitar erros.
         int Relatorios = 0;
@@ -162,7 +161,16 @@ public class A3TESTE {
 
         String relatorio = "CONTAS A PAGAR\n\n";
 
-        // Variável auxiliar para trocar as posições sem perder o valor anterior.
+        // Controla se alguma conta foi encontrada no período informado.
+        boolean encontrouConta = false;
+
+        // Define os títulos das colunas do relatório.
+        String cabecalho = String.format("%-12s %-12s %-12s %-20s %-25s",
+                "VENCIMENTO", "VALOR", "DOCUMENTO", "DESCRIÇÃO", "BENEFICIÁRIO");
+        relatorio += cabecalho + "\n";
+        relatorio += "---------------------------------------------------------------------------------------------\n";
+
+// Variável auxiliar para trocar as posições sem perder o valor anterior.
         int[] ordem = new int[vencimentos.length];
         // Preenche automaticamente o vetor ordem conforme a quantidade de contas cadastradas
         for (int n = 0; n < ordem.length; n = n + 1) {
@@ -191,23 +199,28 @@ public class A3TESTE {
 
             if ((vencimentos[ordem[n]].isAfter(inicio) || vencimentos[ordem[n]].isEqual(inicio)) && (vencimentos[ordem[n]].isBefore(fim) || vencimentos[ordem[n]].isEqual(fim)) && (saldodevedor[ordem[n]] > 0)) {
 
+                encontrouConta = true;
+
                 // Acrescenta os dados da conta ao relatório, mantendo a ordem dos vencimentos.
-                relatorio += "Documento: " + documentos[ordem[n]] + "\n";
-                relatorio += "Vencimento: " + vencimentos[ordem[n]].format(formato) + "\n";
-                relatorio += "Descrição: " + descricoes[ordem[n]] + "\n";
-                relatorio += "Beneficiário: " + beneficiarios[ordem[n]] + "\n";
-                relatorio += "Valor: " + moeda.format(valores[ordem[n]]) + "\n";
-                relatorio += "Saldo devedor: " + moeda.format(saldodevedor[ordem[n]]) + "\n";
-                relatorio += "\n----------------------------\n\n";
+                relatorio += String.format("%-12s %-12s %-12d %-20s %-25s\n",
+                        vencimentos[ordem[n]].format(formato),
+                        moeda.format(valores[ordem[n]]),
+                        documentos[ordem[n]],
+                        descricoes[ordem[n]],
+                        beneficiarios[ordem[n]]);
 
             }
         }
 
-        if (relatorio.equals("CONTAS A PAGAR\n\n")) {
+        if (encontrouConta == false) {
             relatorio = "Nenhuma conta a pagar encontrada neste período.";
         }
 
-        JOptionPane.showMessageDialog(null, relatorio);
+        JTextArea area = new JTextArea(relatorio);
+        area.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12));
+        area.setEditable(false);
+
+        JOptionPane.showMessageDialog(null, area);
 
     }
 
@@ -256,6 +269,16 @@ public class A3TESTE {
         NumberFormat moeda = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
 
         String relatorio = "CONTAS ATRASADAS\n\n";
+
+        // Controla se alguma conta atrasada foi encontrada no período informado.
+        boolean encontrouConta = false;
+
+        // Define os títulos das colunas do relatório.
+        String cabecalho = String.format("%-12s %-12s %-12s %-20s %-25s",
+                "VENCIMENTO", "VALOR", "DOCUMENTO", "DESCRIÇÃO", "BENEFICIÁRIO");
+
+        relatorio += cabecalho + "\n";
+        relatorio += "---------------------------------------------------------------------------------------------\n";
         // Obtém a data atual para identificar contas vencidas.
         LocalDate hoje = LocalDate.now();
 
@@ -290,24 +313,29 @@ public class A3TESTE {
                     && (vencimentos[ordem[n]].isBefore(fim) || vencimentos[ordem[n]].isEqual(fim))
                     && (saldodevedor[ordem[n]] > 0)
                     && vencimentos[ordem[n]].isBefore(hoje)) {
+                // Indica que pelo menos uma conta foi encontrada no período.
+                encontrouConta = true;
 
                 // Acrescenta os dados da conta ao relatório, mantendo a ordem dos vencimentos.
-                relatorio += "Documento: " + documentos[ordem[n]] + "\n";
-                relatorio += "Vencimento: " + vencimentos[ordem[n]].format(formato) + "\n";
-                relatorio += "Descrição: " + descricoes[ordem[n]] + "\n";
-                relatorio += "Beneficiário: " + beneficiarios[ordem[n]] + "\n";
-                relatorio += "Valor: " + moeda.format(valores[ordem[n]]) + "\n";
-                relatorio += "Saldo devedor: " + moeda.format(saldodevedor[ordem[n]]) + "\n";
-                relatorio += "\n----------------------------\n\n";
+                relatorio += String.format("%-12s %-12s %-12d %-20s %-25s\n",
+                        vencimentos[ordem[n]].format(formato),
+                        moeda.format(valores[ordem[n]]),
+                        documentos[ordem[n]],
+                        descricoes[ordem[n]],
+                        beneficiarios[ordem[n]]);
 
             }
         }
 
-        if (relatorio.equals("CONTAS ATRASADAS\n\n")) {
+        if (encontrouConta == false) {
             relatorio = "Nenhuma conta atrasada encontrada neste período.";
         }
 
-        JOptionPane.showMessageDialog(null, relatorio);
+        JTextArea area = new JTextArea(relatorio);
+        area.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12));
+        area.setEditable(false);
+
+        JOptionPane.showMessageDialog(null, area);
 
     }
 
@@ -353,6 +381,14 @@ public class A3TESTE {
 
         // Armazena as informações do balanço
         String relatorio = "BALANÇO DE DESPESAS\n\n";
+
+        // Define os títulos das colunas do balanço de despesas.
+        String cabecalho = String.format("%-15s %-22s %-25s",
+                "MÊS", "TOTAL DE DESPESAS", "MAIOR BENEFICIÁRIO");
+
+        relatorio += cabecalho + "\n";
+        relatorio += "---------------------------------------------------------------\n";
+
         LocalDate mesAtual = inicio.withDayOfMonth(1);
 
         // Percorre os meses até chegar ao final do período
@@ -389,7 +425,7 @@ public class A3TESTE {
                         }
                     }
 
-// Identifica o beneficiário com o maior total
+                    // Identifica o beneficiário com o maior total
                     if (totalBeneficiario > maiorValor) {
                         maiorValor = totalBeneficiario;
                         maiorBeneficiario = beneficiarios[n];
@@ -397,15 +433,21 @@ public class A3TESTE {
 
                 }
             }
-// Acrescenta o mês e o total de despesas ao relatório
-            relatorio += mesAtual.getMonthValue() + "/" + mesAtual.getYear();
-            relatorio += " - Total de despesas: " + moeda.format(totalMes) + "\n";
-            relatorio += "Maior beneficiário: " + maiorBeneficiario + "\n";
-            relatorio += "--------------------------------\n\n";
+            // Acrescenta o mês e o total de despesas ao relatório
+            // Organiza os resultados mensais nas colunas do balanço.
+            relatorio += String.format("%-15s %-22s %-25s\n",
+                    mesAtual.getMonthValue() + "/" + mesAtual.getYear(),
+                    moeda.format(totalMes),
+                    maiorBeneficiario);
             mesAtual = mesAtual.plusMonths(1);
 
         }
 
-        JOptionPane.showMessageDialog(null, relatorio);
+        // Exibe o balanço com fonte de largura fixa para alinhar as colunas.
+        JTextArea area = new JTextArea(relatorio);
+        area.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12));
+        area.setEditable(false);
+
+        JOptionPane.showMessageDialog(null, area);
     }
 }
