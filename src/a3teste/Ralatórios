@@ -353,20 +353,51 @@ public class A3TESTE {
             // Armazena o total de despesas do mês atual
             double totalMes = 0;
 
-            mesAtual = mesAtual.plusMonths(1);
-            
+            // Armazena o beneficiário com o maior total de despesas do mês
+            String maiorBeneficiario = "Nenhum";
+            double maiorValor = 0;
+
             // Percorre as contas para verificar quais pertencem ao mês atual
-for (int n = 0; n < vencimentos.length; n = n + 1) {
-    
-    if (!vencimentos[n].isBefore(inicio)
-        && !vencimentos[n].isAfter(fim)
-        && vencimentos[n].getYear() == mesAtual.getYear()
-        && vencimentos[n].getMonthValue() == mesAtual.getMonthValue()) {
+            for (int n = 0; n < vencimentos.length; n = n + 1) {
 
-    totalMes += valores[n];
+                if (!vencimentos[n].isBefore(inicio)
+                        && !vencimentos[n].isAfter(fim)
+                        && vencimentos[n].getYear() == mesAtual.getYear()
+                        && vencimentos[n].getMonthValue() == mesAtual.getMonthValue()) {
 
-}
-}
+                    totalMes += valores[n];
 
-}
+                    // Soma os valores das contas do mesmo beneficiário
+                    double totalBeneficiario = 0;
+
+                    for (int j = 0; j < valores.length; j = j + 1) {
+                        if (beneficiarios[j].equals(beneficiarios[n])
+                                && !vencimentos[j].isBefore(inicio)
+                                && !vencimentos[j].isAfter(fim)
+                                && vencimentos[j].getYear() == mesAtual.getYear()
+                                && vencimentos[j].getMonthValue() == mesAtual.getMonthValue()) {
+
+                            totalBeneficiario += valores[j];
+                        }
+                    }
+
+// Identifica o beneficiário com o maior total
+                    if (totalBeneficiario > maiorValor) {
+                        maiorValor = totalBeneficiario;
+                        maiorBeneficiario = beneficiarios[n];
+                    }
+
+                }
+            }
+// Acrescenta o mês e o total de despesas ao relatório
+            relatorio += mesAtual.getMonthValue() + "/" + mesAtual.getYear();
+            relatorio += " - Total de despesas: " + moeda.format(totalMes) + "\n";
+            relatorio += "Maior beneficiário: " + maiorBeneficiario + "\n";
+            relatorio += "--------------------------------\n\n";
+            mesAtual = mesAtual.plusMonths(1);
+
         }
+
+        JOptionPane.showMessageDialog(null, relatorio);
+    }
+}
