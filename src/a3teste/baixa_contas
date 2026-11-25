@@ -18,6 +18,15 @@ public class baixa_contas {
                         "\nData de vencimento: " + venc[i] +
                         "\n\nDigite o valor à pagar: "
                 ));
+                
+                valor[i] -= valorPago;
+                JOptionPane.showMessageDialog(null, 
+                        "Valor Pago: " + valorPago + 
+                        "\n\nDescrição: " + desc[i] + 
+                        "\nBeneficiario: " + benef[i] + 
+                        "\nValor atual: " + valor[i] +
+                        "\nData de vencimento: " + venc[i]
+                );
             }
         }
     }
