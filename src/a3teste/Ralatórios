@@ -95,7 +95,7 @@ public class A3TESTE {
                     break;
 
                 case 3:
-                    JOptionPane.showMessageDialog(null, "3 • Balanço de despesas");
+                    balancoDespesas(valores, beneficiarios, vencimentos);
                     break;
 
                 case 0:
@@ -278,11 +278,11 @@ public class A3TESTE {
         // Seleciona as contas dentro do período informado, com saldo devedor e vencimento anterior à data atual.
         for (int n = 0; n <= 2; n = n + 1) {
 
-if ((vencimentos[ordem[n]].isAfter(inicio) || vencimentos[ordem[n]].isEqual(inicio))
-        && (vencimentos[ordem[n]].isBefore(fim) || vencimentos[ordem[n]].isEqual(fim))
-        && (saldodevedor[ordem[n]] > 0)
-        && vencimentos[ordem[n]].isBefore(hoje)) {  
-    
+            if ((vencimentos[ordem[n]].isAfter(inicio) || vencimentos[ordem[n]].isEqual(inicio))
+                    && (vencimentos[ordem[n]].isBefore(fim) || vencimentos[ordem[n]].isEqual(fim))
+                    && (saldodevedor[ordem[n]] > 0)
+                    && vencimentos[ordem[n]].isBefore(hoje)) {
+
                 // Acrescenta os dados da conta ao relatório, mantendo a ordem dos vencimentos.
                 relatorio += "Documento: " + documentos[ordem[n]] + "\n";
                 relatorio += "Vencimento: " + vencimentos[ordem[n]].format(formato) + "\n";
@@ -302,4 +302,71 @@ if ((vencimentos[ordem[n]].isAfter(inicio) || vencimentos[ordem[n]].isEqual(inic
         JOptionPane.showMessageDialog(null, relatorio);
 
     }
+
+    public static void balancoDespesas(
+            double[] valores,
+            String[] beneficiarios,
+            LocalDate[] vencimentos) {
+        JOptionPane.showMessageDialog(null, "3 • Balanço de despesas");
+        String datainicial;
+        String datafinal;
+
+        datainicial = JOptionPane.showInputDialog(null, "Data inicial (dd/MM/aaaa)");
+        datafinal = JOptionPane.showInputDialog(null, "Data final (dd/MM/aaaa)");
+
+        if (datainicial == null || datafinal == null) {
+            return;
+        }
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate inicio;
+        LocalDate fim;
+
+        // Adicionado após identificar erros ao informar datas inválidas
+        try {
+
+            inicio = LocalDate.parse(datainicial, formato);
+            fim = LocalDate.parse(datafinal, formato);
+
+        } catch (DateTimeParseException e) {
+
+            JOptionPane.showMessageDialog(null, "Data inválida! Digite no formato dd/MM/aaaa.");
+            return;
+        }
+
+        // Adicionado após identificar erros ao informar data inicial posterior à data final
+        if (inicio.isAfter(fim)) {
+            JOptionPane.showMessageDialog(null, "Período inválido! A data inicial não pode ser posterior à data final.");
+            return;
+        }
+
+        // Formata os valores monetários no padrão brasileiro
+        NumberFormat moeda = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
+
+        // Armazena as informações do balanço
+        String relatorio = "BALANÇO DE DESPESAS\n\n";
+        LocalDate mesAtual = inicio.withDayOfMonth(1);
+
+        // Percorre os meses até chegar ao final do período
+        while (!mesAtual.isAfter(fim)) {
+
+            // Armazena o total de despesas do mês atual
+            double totalMes = 0;
+
+            mesAtual = mesAtual.plusMonths(1);
+            
+            // Percorre as contas para verificar quais pertencem ao mês atual
+for (int n = 0; n < vencimentos.length; n = n + 1) {
+    
+    if (!vencimentos[n].isBefore(inicio)
+        && !vencimentos[n].isAfter(fim)
+        && vencimentos[n].getYear() == mesAtual.getYear()
+        && vencimentos[n].getMonthValue() == mesAtual.getMonthValue()) {
+
+    totalMes += valores[n];
+
 }
+}
+
+}
+        }
