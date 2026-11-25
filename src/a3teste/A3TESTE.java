@@ -51,34 +51,46 @@ public class a3teste {
         benef[0] = "Banco";
         valor[0] = 314;
         venc[0] = LocalDate.parse("2026-12-25");
+
         int opcao;
 
-        opcao = Integer.parseInt(JOptionPane.showInputDialog(null, " Menu Principal " + "\n 1 • Cadastro de contas" + " \n 2 • Baixa de contas" + " \n 3 • Relatórios" + " \n 0 • Finalizar"));
+        do {
+            String entrada = JOptionPane.showInputDialog(
+                null,
+                " Menu Principal " +
+                "\n\n 1 • Cadastro de contas" +
+                " \n 2 • Baixa de contas" +
+                " \n 3 • Relatórios" +
+                " \n 0 • Finalizar"
+            );
 
-        switch (opcao) {
-            case 1:
-                printCadastroConta();
-                break;
+            if (entrada == null) {
+                opcao = 0;
+            } else {
+                opcao = Integer.parseInt(entrada);
+            }
 
-            case 2:
-                //baixa_contas();
-                break;
+            switch (opcao) {
+                case 1:
+                    printCadastroConta();
+                    break;
 
-            case 3:
-                JOptionPane.showMessageDialog(null, "3 • Relatórios");
-                break;
+                case 2:
+                    baixa_contas();
+                    break;
 
-            case 0:
-                JOptionPane.showMessageDialog(null, "0 • Finalizar");
-                break;
+                case 3:
+                    JOptionPane.showMessageDialog(null, "3 • Relatórios");
+                    break;
 
-            default:
-                JOptionPane.showMessageDialog(null, "Opção inválida! ");
-                break;
-//2 — Baixa de contas
-//3 — Relatórios
-//0 — Finalizar
+                case 0:
+                    JOptionPane.showMessageDialog(null, "0 • Finalizar");
+                    break;
 
-}
-}
+                default:
+                    JOptionPane.showMessageDialog(null, "Opção inválida!");
+                    break;
+            }
+        } while (opcao != 0);
+    }
 }
